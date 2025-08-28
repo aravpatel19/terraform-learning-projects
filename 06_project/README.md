@@ -1,15 +1,11 @@
-# Terraform Learning Projects
-
-A collection of infrastructure projects I've been working on to learn Terraform and AWS services. This started as a simple EC2 deployment but I wanted to explore modern containerized deployments, so I tackled EKS next. Now it's evolved into a complete DevOps pipeline with CI/CD automation!
-
-## Current Project: Node.js App with Full DevOps Pipeline
+# Node.js App with Full DevOps Pipeline
 
 I built a comprehensive user management app with Node.js and MySQL, then deployed it on AWS using multiple approaches. The project now includes a complete CI/CD pipeline, multiple deployment methods, and professional repository structure using git submodules.
 
 ### 🚀 **Three Ways to Access the App:**
 
 1. **Local Docker** (`localhost:3000`) - For local development with local MySQL
-2. **EKS Port-Forward** (`localhost:8080`) - Local access to cloud deployment  
+2. **EKS Port-Forward** (`localhost:8080`) - Local access to cloud deployment
 3. **Public URL** - `http://af2297c2cfb804d858ad1ac92e392174-1808336492.us-east-1.elb.amazonaws.com`
 
 ### ✨ **Key Features:**
@@ -135,6 +131,7 @@ What I really liked about using Terraform is that I can recreate the entire infr
 The project includes a complete CI/CD pipeline using GitHub Actions:
 
 ### **Automated Deployment Process:**
+
 1. **Code Push** - Changes pushed to the app repository
 2. **Docker Build** - GitHub Actions builds the Docker image
 3. **Image Push** - New image pushed to Docker Hub
@@ -142,6 +139,7 @@ The project includes a complete CI/CD pipeline using GitHub Actions:
 5. **Health Check** - Verification that deployment succeeded
 
 ### **Pipeline Features:**
+
 - ✅ **Multi-platform builds** (linux/amd64 for EKS compatibility)
 - ✅ **Docker layer caching** for faster builds
 - ✅ **Rolling deployments** with zero downtime
@@ -151,11 +149,13 @@ The project includes a complete CI/CD pipeline using GitHub Actions:
 ## How to Deploy
 
 ### **Infrastructure Setup:**
+
 1. Run `terraform plan` to see what will be created
 2. Run `terraform apply` to create the infrastructure
 3. Deploy the app to EKS using the Kubernetes manifests
 
 ### **Application Updates:**
+
 1. **Make changes** in the app repository
 2. **Push to GitHub** - CI/CD pipeline triggers automatically
 3. **Monitor deployment** in GitHub Actions
@@ -182,6 +182,7 @@ kubectl logs -n nodejs-app -l app=nodejs-app
 ### **🌐 Access Methods:**
 
 #### **1. Local Docker (localhost:3000):**
+
 ```bash
 # Start local Docker container
 cd 06_project/app
@@ -196,6 +197,7 @@ docker run -d -p 3000:3000 --name terraform-eks-infra \
 ```
 
 #### **2. EKS Port-Forward (localhost:8080):**
+
 ```bash
 # Manual port-forward
 kubectl port-forward -n nodejs-app service/nodejs-service 8080:80
@@ -205,6 +207,7 @@ cd 06_project && ./auto-port-forward.sh
 ```
 
 #### **3. Public URL:**
+
 - **Direct access**: `http://af2297c2cfb804d858ad1ac92e392174-1808336492.us-east-1.elb.amazonaws.com`
 - **Always up-to-date** with latest deployments
 - **No setup required**
@@ -234,15 +237,16 @@ This project evolved from a simple deployment to a comprehensive DevOps pipeline
 ### **🔧 Technical Challenges:**
 
 1. **Architecture mismatch**: Docker image built for ARM64 but EKS nodes were x86_64
+
    - **Solution**: Used `docker buildx` with `--platform linux/amd64`
-
 2. **Network connectivity**: EKS cluster in different VPC than RDS
+
    - **Solution**: Updated RDS security groups to allow EKS VPC traffic
-
 3. **Port-forward reliability**: Connection lost during deployments
-   - **Solution**: Created auto-restart script for seamless development
 
+   - **Solution**: Created auto-restart script for seamless development
 4. **Repository structure**: Managing app and infrastructure code
+
    - **Solution**: Implemented git submodules for clean separation
 
 ### **🚀 DevOps Concepts Mastered:**
@@ -276,6 +280,7 @@ For learning purposes, I tried to keep costs low:
 This project now demonstrates enterprise-level DevOps practices:
 
 ### **✅ Completed:**
+
 - **CI/CD Pipeline** - Automated deployment with GitHub Actions
 - **Git Submodules** - Professional repository structure
 - **Multi-environment access** - Local, staging, and production
@@ -285,6 +290,7 @@ This project now demonstrates enterprise-level DevOps practices:
 - **Infrastructure as Code** - Complete Terraform automation
 
 ### **🚀 Future Enhancements:**
+
 - **Monitoring** - Prometheus/Grafana for observability
 - **Security** - RBAC, network policies, secrets management
 - **Multi-environment** - Separate dev/staging/prod clusters
@@ -294,6 +300,7 @@ This project now demonstrates enterprise-level DevOps practices:
 ## 🏆 Interview Ready
 
 This project showcases:
+
 - **Full-stack development** - Frontend, backend, and database
 - **Cloud architecture** - AWS services integration
 - **DevOps practices** - CI/CD, IaC, containerization

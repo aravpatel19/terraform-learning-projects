@@ -18,6 +18,30 @@ resource "aws_instance" "tf_ec2_instance" {
 
   user_data_replace_on_change = true
 
+
+# 2^3 2^2 2^1 2^0
+
+# 0   0   0   1   =>  1
+
+# 0   0   1   0   =>  2
+# 0   0   1   1   =>  3
+# 0 1 0 0 => 4
+# 0 1 0 1 => 5
+# 0 1 1 0 => 6
+# 0 1 1 1 => 7
+
+# 1 0 0 0 => 8
+# 1 0 0 1 => 9
+# 1 0 1 0 => 10
+# 1 0 1 1 => 11
+# 1 1 0 0 => 12
+
+# 1 1 0 1 => 13
+# 1 1 1 0 => 14
+# 1 1 1 1 => 15
+
+
+
   user_data = <<-EOF
                 #!/bin/bash
 
@@ -39,6 +63,7 @@ resource "aws_instance" "tf_ec2_instance" {
 
                 # start server
                 npm install
+                nohup node server.js > /tmp/server.log 2>&1 &
                 EOF
 
   tags = {
