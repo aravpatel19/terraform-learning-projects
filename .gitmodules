@@ -1,0 +1,3 @@
+[submodule "06_project/app"]
+	path = 06_project/app
+	url = https://github.com/aravpatel19/nodejs-mysql.git
