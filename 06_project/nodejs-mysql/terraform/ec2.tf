@@ -16,6 +16,8 @@ resource "aws_instance" "tf_ec2_instance" {
 
   depends_on = [aws_s3_object.tf_s3_object]
 
+  user_data_replace_on_change = true
+
   user_data = <<-EOF
                 #!/bin/bash
 
@@ -81,4 +83,9 @@ resource "aws_security_group" "tf_ec2_sg" {
         protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
+}
+
+# output
+output "ec2_public_ip" {
+    value = "ssh -i terraform-ec2.pem ubuntu@${aws_instance.tf_ec2_instance.public_ip}"
 }
