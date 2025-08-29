@@ -146,16 +146,42 @@ The project includes a complete CI/CD pipeline using GitHub Actions:
 - ✅ **Health checks** to ensure deployment success
 - ✅ **Automatic rollback** on deployment failure
 
-## How to Deploy
+## 🚀 Quick Deployment Options
 
-### **Infrastructure Setup:**
+I've created scripts to make deployment super easy! Choose your preferred setup:
 
+### **Option 1: Full EKS Setup (Enterprise-Grade)**
+```bash
+./deploy-full-eks.sh
+```
+- **Cost**: ~$127/month
+- **Time**: 10-15 minutes
+- **Features**: EKS cluster, load balancer, auto-scaling, full Kubernetes
+- **Best for**: Demonstrating enterprise DevOps skills
+
+### **Option 2: Simple Setup (Cost-Effective)**
+```bash
+./deploy-simple.sh
+```
+- **Cost**: ~$17/month
+- **Time**: 3-5 minutes
+- **Features**: EC2 + RDS + S3, direct deployment
+- **Best for**: Learning and demos
+
+### **Destroy Everything (Save Money)**
+```bash
+./destroy-all.sh        # Destroys everything
+./destroy-simple.sh     # Destroys only simple setup
+```
+
+### **Manual Deployment (Advanced Users):**
+
+#### **Infrastructure Setup:**
 1. Run `terraform plan` to see what will be created
 2. Run `terraform apply` to create the infrastructure
 3. Deploy the app to EKS using the Kubernetes manifests
 
-### **Application Updates:**
-
+#### **Application Updates:**
 1. **Make changes** in the app repository
 2. **Push to GitHub** - CI/CD pipeline triggers automatically
 3. **Monitor deployment** in GitHub Actions
@@ -266,14 +292,34 @@ This project evolved from a simple deployment to a comprehensive DevOps pipeline
 - **Multiple access methods** improve development workflow
 - **Professional practices** make projects more maintainable
 
-## Cost Considerations
+## 💰 Cost Considerations
 
-For learning purposes, I tried to keep costs low:
+I've optimized the project for different use cases:
 
-- **EC2 t2.micro**: Free tier eligible (750 hours/month)
-- **RDS db.t3.micro**: Free tier eligible (750 hours/month)
-- **S3**: First 5GB free, then $0.023/GB/month
-- **EKS**: This one costs money (~$73/month for the control plane)
+### **Current Status: $0/month** ✅
+- All infrastructure destroyed to save money
+- Use deployment scripts to bring back what you need
+
+### **Cost Breakdown:**
+
+#### **Simple Setup (~$17/month):**
+- **EC2 t2.micro**: $8.50/month (1 vCPU, 1GB RAM)
+- **RDS db.t2.micro**: $8.50/month (1 vCPU, 1GB RAM)
+- **S3**: ~$0.50/month (minimal usage)
+
+#### **Full EKS Setup (~$127/month):**
+- **EKS Control Plane**: $73/month (always running)
+- **1x t3.small worker node**: $15/month
+- **Load Balancer**: $18/month
+- **EC2 t2.micro**: $8.50/month
+- **RDS db.t2.micro**: $8.50/month
+- **S3**: ~$0.50/month
+
+### **Cost Optimization Tips:**
+- **Use simple setup** for learning and demos
+- **Destroy when not needed** - scripts make it easy to recreate
+- **EKS is expensive** - only use for enterprise demos
+- **Both setups use t2.micro** - consistent and cost-effective
 
 ## 🎯 Professional Features Implemented
 

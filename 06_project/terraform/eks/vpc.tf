@@ -72,52 +72,11 @@ resource "aws_route_table_association" "public_rta" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-# NAT Gateway for Private Subnets
-resource "aws_eip" "nat_eip" {
-  count = 2
+# NAT Gateways removed - not needed for demo app
+# Worker nodes now use public subnets with direct internet access
 
-  domain = "vpc"
-  depends_on = [aws_internet_gateway.eks_igw]
-
-  tags = {
-    Name = "eks-nat-eip-${count.index + 1}"
-  }
-}
-
-resource "aws_nat_gateway" "nat_gw" {
-  count = 2
-
-  allocation_id = aws_eip.nat_eip[count.index].id
-  subnet_id     = aws_subnet.public_subnets[count.index].id
-
-  tags = {
-    Name = "eks-nat-gw-${count.index + 1}"
-  }
-}
-
-# Route Table for Private Subnets
-resource "aws_route_table" "private_rt" {
-  count = 2
-
-  vpc_id = aws_vpc.eks_vpc.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[count.index].id
-  }
-
-  tags = {
-    Name = "eks-private-rt-${count.index + 1}"
-  }
-}
-
-# Route Table Association for Private Subnets
-resource "aws_route_table_association" "private_rta" {
-  count = 2
-
-  subnet_id      = aws_subnet.private_subnets[count.index].id
-  route_table_id = aws_route_table.private_rt[count.index].id
-}
+# Private subnets and route tables removed - not needed for demo app
+# All resources now use public subnets
 
 # Data source for availability zones
 data "aws_availability_zones" "available" {
